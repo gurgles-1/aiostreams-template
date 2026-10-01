@@ -6,6 +6,34 @@ import uuid
 RSE_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.expressions.json"
 REGEX_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.regexes.json"
 
+# Version/changelog: AIOStreams matches applied templates to updates by
+# metadata.id, so the id below ("evan.aiostreams.setup") must NEVER change
+# between versions — only bump TEMPLATE_VERSION.
+TEMPLATE_VERSION = "4.0.0"
+
+CHANGELOG = [
+    {
+        "date": "2026-10-01",
+        "version": "1.0.0",
+        "content": "Initial template: NZBNest + Hashnab newznab indexers, Zilean native preset, full addon lineup.",
+    },
+    {
+        "date": "2026-10-01",
+        "version": "2.0.0",
+        "content": "Dropped Hashnab; Zilean via Torznab preset instead of native.",
+    },
+    {
+        "date": "2026-10-01",
+        "version": "3.0.0",
+        "content": "Dropped all indexers from the template (managed via the Prowlarr marketplace addon instead).",
+    },
+    {
+        "date": "2026-10-01",
+        "version": "4.0.0",
+        "content": "Fixed Library preset showRefreshActions type; stable template ID so AIOStreams can offer in-place updates.",
+    },
+]
+
 inputs = [
     {
         "id": "metaApis",
@@ -134,7 +162,7 @@ presets = [
             "timeout": 5000,
             "resources": ["catalog", "meta", "stream"],
             "mediaTypes": [],
-            "showRefreshActions": True,
+            "showRefreshActions": ["catalog"],
             "skipProcessing": False,
             "hideStreams": False,
             "useMultipleInstances": False,
@@ -244,11 +272,12 @@ template = [
             "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
             "author": "Evan",
             "source": "custom",
-            "version": "3.0.0",
+            "version": TEMPLATE_VERSION,
             "category": "AIO",
             "serviceRequired": False,
             "services": ["torbox", "torrin", "aiostreams"],
             "inputs": inputs,
+            "changelog": CHANGELOG,
         },
         "config": config,
     }
