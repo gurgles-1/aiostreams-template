@@ -1,0 +1,369 @@
+[
+  {
+    "metadata": {
+      "id": "evan.aiostreams.setup",
+      "name": "Evan's AIOStreams Setup",
+      "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
+      "author": "Evan",
+      "source": "custom",
+      "version": "4.0.0",
+      "category": "AIO",
+      "serviceRequired": false,
+      "services": [
+        "torbox",
+        "torrin",
+        "aiostreams"
+      ],
+      "inputs": [
+        {
+          "id": "metaApis",
+          "name": "Metadata APIs",
+          "description": "Keys used for posters and metadata lookups. TMDB is strongly recommended.",
+          "type": "subsection",
+          "required": false,
+          "subOptions": [
+            {
+              "id": "tmdbApiKey",
+              "name": "TMDB API Key",
+              "description": "Your TMDB API key.",
+              "type": "password",
+              "required": false
+            },
+            {
+              "id": "tvdbApiKey",
+              "name": "TVDB API Key",
+              "description": "Your TVDB API key (optional).",
+              "type": "password",
+              "required": false
+            }
+          ]
+        },
+        {
+          "id": "aiometa",
+          "name": "AIOMetadata (optional)",
+          "description": "Cross-ID metadata addon. Paste the manifest URL only if you run AIOMetadata; otherwise leave blank and the addon entry is skipped.",
+          "type": "subsection",
+          "required": false,
+          "subOptions": [
+            {
+              "id": "aiometaUrl",
+              "name": "AIOMetadata manifest URL",
+              "description": "Full manifest URL of your AIOMetadata instance.",
+              "type": "url",
+              "required": false
+            }
+          ]
+        }
+      ],
+      "changelog": [
+        {
+          "date": "2026-10-01",
+          "version": "1.0.0",
+          "content": "Initial template: NZBNest + Hashnab newznab indexers, Zilean native preset, full addon lineup."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "2.0.0",
+          "content": "Dropped Hashnab; Zilean via Torznab preset instead of native."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "3.0.0",
+          "content": "Dropped all indexers from the template (managed via the Prowlarr marketplace addon instead)."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "4.0.0",
+          "content": "Fixed Library preset showRefreshActions type; stable template ID so AIOStreams can offer in-place updates."
+        }
+      ]
+    },
+    "config": {
+      "preferredLanguages": [
+        "English"
+      ],
+      "tmdbApiKey": {
+        "__if": "inputs.metaApis.tmdbApiKey",
+        "__value": "{{inputs.metaApis.tmdbApiKey}}"
+      },
+      "tvdbApiKey": {
+        "__if": "inputs.metaApis.tvdbApiKey",
+        "__value": "{{inputs.metaApis.tvdbApiKey}}"
+      },
+      "presets": [
+        {
+          "type": "comet",
+          "instanceId": "d23250e5-1ca2-46ab-992f-064bf9af79ea",
+          "enabled": true,
+          "options": {
+            "name": "Comet",
+            "timeout": 5000,
+            "resources": [
+              "stream"
+            ],
+            "mediaTypes": [],
+            "includeP2P": true,
+            "removeTrash": true,
+            "useMultipleInstances": false
+          },
+          "category": "Debrid"
+        },
+        {
+          "type": "torrentio",
+          "instanceId": "d0c404b3-16f7-4f80-af48-1c6129e218ac",
+          "enabled": true,
+          "options": {
+            "name": "Torrentio",
+            "timeout": 5000,
+            "resources": [
+              "stream"
+            ],
+            "mediaTypes": [],
+            "providers": [],
+            "useMultipleInstances": false
+          },
+          "category": "Debrid"
+        },
+        {
+          "type": "mediafusion",
+          "instanceId": "e642cd91-0ae1-48f2-918c-e7c86789a007",
+          "enabled": true,
+          "options": {
+            "name": "MediaFusion",
+            "timeout": 5000,
+            "resources": [
+              "stream"
+            ],
+            "mediaTypes": [],
+            "useCachedResultsOnly": true,
+            "enableWatchlistCatalogs": false,
+            "downloadViaBrowser": false,
+            "contributorStreams": false,
+            "certificationLevelsFilter": [],
+            "nudityFilter": [],
+            "includeP2P": true,
+            "useMultipleInstances": false
+          },
+          "category": "Debrid"
+        },
+        {
+          "type": "stremthruTorz",
+          "instanceId": "6d0ff9d6-2e64-4356-a531-3d5c613a5c9e",
+          "enabled": true,
+          "options": {
+            "name": "StremThru Torz",
+            "timeout": 5000,
+            "resources": [
+              "stream"
+            ],
+            "mediaTypes": [],
+            "includeP2P": true,
+            "useMultipleInstances": false
+          },
+          "category": "Debrid"
+        },
+        {
+          "type": "torbox",
+          "instanceId": "c7f624c9-6978-424f-b267-359a127facfd",
+          "enabled": true,
+          "options": {
+            "name": "TorBox",
+            "timeout": 5000,
+            "resources": [
+              "stream",
+              "meta",
+              "catalog"
+            ],
+            "mediaTypes": []
+          },
+          "category": "Debrid"
+        },
+        {
+          "type": "library",
+          "instanceId": "0614c4c3-8b7c-4e57-a1f5-64b6eec8beaa",
+          "enabled": true,
+          "options": {
+            "name": "Library",
+            "timeout": 5000,
+            "resources": [
+              "catalog",
+              "meta",
+              "stream"
+            ],
+            "mediaTypes": [],
+            "showRefreshActions": [
+              "catalog"
+            ],
+            "skipProcessing": false,
+            "hideStreams": false,
+            "useMultipleInstances": false
+          },
+          "category": "Library"
+        },
+        {
+          "__if": "inputs.aiometa.aiometaUrl",
+          "type": "custom",
+          "instanceId": "c1b68057-ab62-4e96-980c-658d0b98ce6d",
+          "enabled": true,
+          "options": {
+            "name": "AIOMetadata",
+            "manifestUrl": "{{inputs.aiometa.aiometaUrl}}",
+            "timeout": 5000,
+            "resources": [
+              "meta",
+              "catalog"
+            ],
+            "mediaTypes": []
+          },
+          "category": "Metadata"
+        }
+      ],
+      "syncedRankedStreamExpressionUrls": [
+        "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.expressions.json"
+      ],
+      "syncedRankedRegexUrls": [
+        "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.regexes.json"
+      ],
+      "sortCriteria": {
+        "global": [
+          {
+            "key": "cached",
+            "direction": "desc"
+          }
+        ],
+        "cached": [
+          {
+            "key": "library",
+            "direction": "desc"
+          },
+          {
+            "key": "service",
+            "direction": "desc"
+          },
+          {
+            "key": "resolution",
+            "direction": "desc"
+          },
+          {
+            "key": "quality",
+            "direction": "desc"
+          },
+          {
+            "key": "streamExpressionScore",
+            "direction": "desc"
+          },
+          {
+            "key": "language",
+            "direction": "desc"
+          },
+          {
+            "key": "encode",
+            "direction": "desc"
+          },
+          {
+            "key": "bitrate",
+            "direction": "desc"
+          }
+        ],
+        "uncached": [
+          {
+            "key": "resolution",
+            "direction": "desc"
+          },
+          {
+            "key": "quality",
+            "direction": "desc"
+          },
+          {
+            "key": "streamExpressionScore",
+            "direction": "desc"
+          },
+          {
+            "key": "language",
+            "direction": "desc"
+          },
+          {
+            "key": "encode",
+            "direction": "desc"
+          },
+          {
+            "key": "bitrate",
+            "direction": "desc"
+          }
+        ]
+      },
+      "formatter": {
+        "id": "custom",
+        "definitions": {
+          "custom": {
+            "name": "{stream.title} | {stream.resolution} {stream.quality} | {stream.size} | {stream.languages} | SEL:{stream.seScore}",
+            "description": "Matched: {stream.rseMatched} | {stream.visualTags} {stream.audioTags} | {stream.releaseGroup} | {stream.bitrate} | via {stream.indexer}"
+          }
+        }
+      },
+      "failover": {
+        "enabled": true,
+        "contentTypes": [
+          "usenet",
+          "debrid"
+        ],
+        "allowCrossType": true,
+        "maxAttempts": 5,
+        "parallel": 2,
+        "position": "beforeLimiting",
+        "includeExternalFailover": true,
+        "sameReleaseLimit": 2,
+        "precacheFailover": false
+      },
+      "deduplicator": {
+        "enabled": true,
+        "excludeAddons": [],
+        "multiGroupBehaviour": "aggressive",
+        "keys": [
+          "filename",
+          "infoHash",
+          "smartDetect"
+        ],
+        "cached": "single_result",
+        "uncached": "single_result",
+        "p2p": "single_result",
+        "http": "per_addon",
+        "smartDetectAttributes": [
+          "size",
+          "resolution",
+          "quality",
+          "visualTags",
+          "audioTags",
+          "audioChannels",
+          "languages",
+          "encode",
+          "edition",
+          "network",
+          "remastered",
+          "bitrate",
+          "releaseGroup"
+        ],
+        "smartDetectRounding": 10,
+        "libraryBehaviour": "prefer",
+        "merge": {
+          "enabled": true,
+          "failoverVariants": true,
+          "fields": [
+            "sizes",
+            "seadex",
+            "library",
+            "subtitles",
+            "languages"
+          ]
+        }
+      },
+      "cacheAndPlay": {
+        "enabled": true,
+        "streamTypes": [
+          "usenet"
+        ]
+      },
+      "checkOwned": true
+    }
+  }
+]
