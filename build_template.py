@@ -6,93 +6,7 @@ import uuid
 RSE_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.expressions.json"
 REGEX_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.regexes.json"
 
-def nab_endpoint(id, name, description, url_label, url_default=None, url_options=None,
-                 namespace="newznab", key_description=None):
-    """A nab-endpoint input: renders URL + API key with a server-side test button.
-
-    Holds its value as an object {url, apiKey}; referenced in config with dot
-    notation, e.g. {{inputs.indexers.nzbnest}} or inputs.indexers.nzbnest.apiKey.
-    """
-    url_sub = {
-        "id": "url",
-        "name": url_label,
-        "description": f"Full {namespace.capitalize()} API endpoint URL, usually ending in /api.",
-        "type": "select-with-custom" if url_options else "url",
-        "required": False,
-    }
-    if url_options:
-        url_sub["options"] = url_options
-    if url_default:
-        url_sub["default"] = url_default
-    return {
-        "id": id,
-        "name": name,
-        "description": description,
-        "type": "nab-endpoint",
-        "required": False,
-        "nab": {"namespace": namespace},
-        "subOptions": [
-            url_sub,
-            {
-                "id": "apiKey",
-                "name": "API Key",
-                "description": key_description or f"Your {name} API key. Leave blank to skip {name}.",
-                "type": "password",
-                "required": False,
-            },
-        ],
-    }
-
-
 inputs = [
-    {
-        "id": "indexers",
-        "name": "Usenet Indexers",
-        "description": "NZBNest Newznab indexer. Fill in the API key to include it; leave it blank to skip it.",
-        "type": "subsection",
-        "required": False,
-        "subOptions": [
-            nab_endpoint(
-                "nzbnest",
-                "NZBNest",
-                "NZBNest Newznab indexer.",
-                "NZBNest URL",
-                url_default="https://nzbnest.com/api",
-                url_options=[
-                    {
-                        "label": "NzbNest",
-                        "value": "https://nzbnest.com/api",
-                        "apiKeyUrl": "https://nzbnest.com/profile",
-                    }
-                ],
-            ),
-        ],
-    },
-    {
-        "id": "indexerNote",
-        "name": "NNTP providers",
-        "description": "Usenet results are fetched through the built-in AIOStreams NNTP engine, so add your NNTP providers under Dashboard -> Usenet -> Providers after applying (providers are instance-level and cannot be part of a template).",
-        "type": "alert",
-        "intent": "info",
-    },
-    {
-        "id": "localAddons",
-        "name": "Local Addons",
-        "description": "Zilean runs on alderaan and exposes a Torznab endpoint. Leave the URL as-is unless it moved.",
-        "type": "subsection",
-        "required": False,
-        "subOptions": [
-            nab_endpoint(
-                "zilean",
-                "Zilean",
-                "Zilean Torznab endpoint (torrent indexer for debrid).",
-                "Zilean Torznab URL",
-                url_default="http://192.168.68.64:8181/torznab",
-                namespace="torznab",
-                key_description="API key for Zilean's Torznab endpoint, if yours requires one. Usually blank for LAN instances.",
-            ),
-        ],
-    },
     {
         "id": "metaApis",
         "name": "Metadata APIs",
@@ -135,29 +49,7 @@ inputs = [
 ]
 
 
-def newznab_preset(name, input_path):
-    return {
-        "__if": f"inputs.{input_path}.apiKey",
-        "type": "newznab",
-        "instanceId": "",
-        "enabled": True,
-        "options": {
-            "name": name,
-            "api": "{{inputs." + input_path + "}}",
-            "timeout": 15000,
-            "mediaTypes": [],
-            "services": ["aiostreams"],
-            "searchMode": "both",
-            "seasonEpisodeStrategy": "dynamic",
-            "paginate": True,
-            "useMultipleInstances": False,
-        },
-        "category": "Usenet",
-    }
-
-
 presets = [
-    newznab_preset("NZBNest", "indexers.nzbnest"),
     {
         "type": "comet",
         "instanceId": "",
@@ -217,22 +109,6 @@ presets = [
             "resources": ["stream"],
             "mediaTypes": [],
             "includeP2P": True,
-            "useMultipleInstances": False,
-        },
-        "category": "Debrid",
-    },
-    {
-        "type": "torznab",
-        "instanceId": "",
-        "enabled": True,
-        "options": {
-            "name": "Zilean",
-            "api": "{{inputs.localAddons.zilean}}",
-            "timeout": 5000,
-            "mediaTypes": [],
-            "searchMode": "both",
-            "seasonEpisodeStrategy": "dynamic",
-            "paginate": True,
             "useMultipleInstances": False,
         },
         "category": "Debrid",
@@ -365,10 +241,10 @@ template = [
         "metadata": {
             "id": "evan.aiostreams.setup",
             "name": "Evan's AIOStreams Setup",
-            "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru) + Usenet through the built-in NNTP engine, NZBNest Newznab indexer, Comet/Torrentio/MediaFusion/StremThru Torz scrapers, Zilean on alderaan via Torznab, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced.",
+            "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
             "author": "Evan",
             "source": "custom",
-            "version": "2.0.0",
+            "version": "3.0.0",
             "category": "AIO",
             "serviceRequired": False,
             "services": ["torbox", "torrin", "aiostreams"],
