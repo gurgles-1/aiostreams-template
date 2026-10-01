@@ -6,7 +6,7 @@
       "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
       "author": "Evan",
       "source": "custom",
-      "version": "3.0.0",
+      "version": "4.0.0",
       "category": "AIO",
       "serviceRequired": false,
       "services": [
@@ -54,6 +54,28 @@
             }
           ]
         }
+      ],
+      "changelog": [
+        {
+          "date": "2026-10-01",
+          "version": "1.0.0",
+          "content": "Initial template: NZBNest + Hashnab newznab indexers, Zilean native preset, full addon lineup."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "2.0.0",
+          "content": "Dropped Hashnab; Zilean via Torznab preset instead of native."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "3.0.0",
+          "content": "Dropped all indexers from the template (managed via the Prowlarr marketplace addon instead)."
+        },
+        {
+          "date": "2026-10-01",
+          "version": "4.0.0",
+          "content": "Fixed Library preset showRefreshActions type; stable template ID so AIOStreams can offer in-place updates."
+        }
       ]
     },
     "config": {
@@ -71,7 +93,7 @@
       "presets": [
         {
           "type": "comet",
-          "instanceId": "433b31e7-0857-44c0-b32a-7a4060bfa593",
+          "instanceId": "d23250e5-1ca2-46ab-992f-064bf9af79ea",
           "enabled": true,
           "options": {
             "name": "Comet",
@@ -88,7 +110,7 @@
         },
         {
           "type": "torrentio",
-          "instanceId": "d0f15283-48dd-4b43-b2a4-923ad229e28c",
+          "instanceId": "d0c404b3-16f7-4f80-af48-1c6129e218ac",
           "enabled": true,
           "options": {
             "name": "Torrentio",
@@ -104,7 +126,7 @@
         },
         {
           "type": "mediafusion",
-          "instanceId": "9d0b588c-de26-44b9-adaf-f08209c49ba8",
+          "instanceId": "e642cd91-0ae1-48f2-918c-e7c86789a007",
           "enabled": true,
           "options": {
             "name": "MediaFusion",
@@ -126,7 +148,7 @@
         },
         {
           "type": "stremthruTorz",
-          "instanceId": "7983ac3e-c123-4fc4-9187-fb6b595300cf",
+          "instanceId": "6d0ff9d6-2e64-4356-a531-3d5c613a5c9e",
           "enabled": true,
           "options": {
             "name": "StremThru Torz",
@@ -142,7 +164,7 @@
         },
         {
           "type": "torbox",
-          "instanceId": "6bc56120-8dd7-49ec-9693-7895e97dda57",
+          "instanceId": "c7f624c9-6978-424f-b267-359a127facfd",
           "enabled": true,
           "options": {
             "name": "TorBox",
@@ -158,7 +180,7 @@
         },
         {
           "type": "library",
-          "instanceId": "f65632fa-ac88-4c4e-b92d-177817d5f40d",
+          "instanceId": "0614c4c3-8b7c-4e57-a1f5-64b6eec8beaa",
           "enabled": true,
           "options": {
             "name": "Library",
@@ -169,7 +191,9 @@
               "stream"
             ],
             "mediaTypes": [],
-            "showRefreshActions": true,
+            "showRefreshActions": [
+              "catalog"
+            ],
             "skipProcessing": false,
             "hideStreams": false,
             "useMultipleInstances": false
@@ -179,7 +203,7 @@
         {
           "__if": "inputs.aiometa.aiometaUrl",
           "type": "custom",
-          "instanceId": "fb9b209a-4c81-4e95-80ce-ea4bcd6e36b8",
+          "instanceId": "c1b68057-ab62-4e96-980c-658d0b98ce6d",
           "enabled": true,
           "options": {
             "name": "AIOMetadata",
