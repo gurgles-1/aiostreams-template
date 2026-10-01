@@ -9,20 +9,22 @@ In AIOStreams: **About → Get Started → Use a Template → Import Template**,
 | File | URL |
 |---|---|
 | Latest | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.json` |
+| v3 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v3.json` |
 | v2 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v2.json` |
 | v1 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v1.json` |
 
 Importing creates a **new** AIOStreams configuration — it never overwrites your existing one.
 
-## What's in it (v2)
+## What's in it (v3)
 
 - **Debrid:** TorBox + Torrin (via StremThru), Comet, Torrentio, MediaFusion, StremThru Torz scrapers
-- **Usenet:** NZBNest Newznab indexer through the built-in NNTP engine (add your NNTP providers under Dashboard → Usenet → Providers after import — providers are instance-level and can't be in a template)
-- **Local:** Zilean via its Torznab endpoint, AIOMetadata (optional)
+- **Library** addon, AIOMetadata (optional)
 - **Sorting:** cached-first, Library pinned high, Redhair777 2160p Remux SEL + regex lists synced
-- 9 presets, no anime
+- 7 presets, no anime
 
-v1 also included a Hashnab indexer and used AIOStreams' native Zilean preset; v2 drops Hashnab and switches Zilean to the Torznab preset.
+Indexers are managed separately via the Prowlarr marketplace addon (v3 drops the template's indexer inputs/presets entirely).
+
+v2 had NZBNest (newznab) + Zilean (torznab); v1 also had Hashnab and used the native Zilean preset.
 
 ## Versions
 
@@ -31,7 +33,7 @@ v1 also included a Hashnab indexer and used AIOStreams' native Zilean preset; v2
 
 ## Secrets
 
-API keys (TMDB, TVDB, indexer keys) are **template inputs**, not baked into the JSON. You enter them once at import; they're stored in your AIOStreams configuration only.
+API keys (TMDB, TVDB) are **template inputs**, not baked into the JSON. You enter them once at import; they're stored in your AIOStreams configuration only.
 
 ## Rebuilding
 
