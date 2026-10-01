@@ -6,7 +6,8 @@ import uuid
 RSE_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.expressions.json"
 REGEX_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.regexes.json"
 
-def nab_endpoint(id, name, description, url_label, url_default=None, url_options=None):
+def nab_endpoint(id, name, description, url_label, url_default=None, url_options=None,
+                 namespace="newznab", key_description=None):
     """A nab-endpoint input: renders URL + API key with a server-side test button.
 
     Holds its value as an object {url, apiKey}; referenced in config with dot
@@ -15,7 +16,7 @@ def nab_endpoint(id, name, description, url_label, url_default=None, url_options
     url_sub = {
         "id": "url",
         "name": url_label,
-        "description": "Full Newznab API endpoint URL, usually ending in /api.",
+        "description": f"Full {namespace.capitalize()} API endpoint URL, usually ending in /api.",
         "type": "select-with-custom" if url_options else "url",
         "required": False,
     }
@@ -29,13 +30,13 @@ def nab_endpoint(id, name, description, url_label, url_default=None, url_options
         "description": description,
         "type": "nab-endpoint",
         "required": False,
-        "nab": {"namespace": "newznab"},
+        "nab": {"namespace": namespace},
         "subOptions": [
             url_sub,
             {
                 "id": "apiKey",
                 "name": "API Key",
-                "description": f"Your {name} API key. Leave blank to skip {name}.",
+                "description": key_description or f"Your {name} API key. Leave blank to skip {name}.",
                 "type": "password",
                 "required": False,
             },
@@ -47,7 +48,7 @@ inputs = [
     {
         "id": "indexers",
         "name": "Usenet Indexers",
-        "description": "NZBNest and Hashnab Newznab indexers. Each indexer is added twice — once for ID-based (Auto) search and once for title-text (Query) search — so NZBs surface whether or not the indexer supports ID lookups. Fill in an API key to include that indexer; leave it blank to skip it.",
+        "description": "NZBNest Newznab indexer. Fill in the API key to include it; leave it blank to skip it.",
         "type": "subsection",
         "required": False,
         "subOptions": [
@@ -65,12 +66,6 @@ inputs = [
                     }
                 ],
             ),
-            nab_endpoint(
-                "hashnab",
-                "Hashnab",
-                "Hashnab Newznab indexer.",
-                "Hashnab URL",
-            ),
         ],
     },
     {
@@ -83,18 +78,19 @@ inputs = [
     {
         "id": "localAddons",
         "name": "Local Addons",
-        "description": "Zilean runs on alderaan. Leave the URL as-is unless it moved.",
+        "description": "Zilean runs on alderaan and exposes a Torznab endpoint. Leave the URL as-is unless it moved.",
         "type": "subsection",
         "required": False,
         "subOptions": [
-            {
-                "id": "zileanUrl",
-                "name": "Zilean URL",
-                "description": "Base URL of your Zilean instance.",
-                "type": "url",
-                "required": False,
-                "default": "http://192.168.68.64:8181",
-            },
+            nab_endpoint(
+                "zilean",
+                "Zilean",
+                "Zilean Torznab endpoint (torrent indexer for debrid).",
+                "Zilean Torznab URL",
+                url_default="http://192.168.68.64:8181/torznab",
+                namespace="torznab",
+                key_description="API key for Zilean's Torznab endpoint, if yours requires one. Usually blank for LAN instances.",
+            ),
         ],
     },
     {
@@ -162,7 +158,6 @@ def newznab_preset(name, input_path):
 
 presets = [
     newznab_preset("NZBNest", "indexers.nzbnest"),
-    newznab_preset("Hashnab", "indexers.hashnab"),
     {
         "type": "comet",
         "instanceId": "",
@@ -227,14 +222,17 @@ presets = [
         "category": "Debrid",
     },
     {
-        "type": "zilean",
+        "type": "torznab",
         "instanceId": "",
         "enabled": True,
         "options": {
             "name": "Zilean",
-            "url": "{{inputs.localAddons.zileanUrl}}",
+            "api": "{{inputs.localAddons.zilean}}",
             "timeout": 5000,
             "mediaTypes": [],
+            "searchMode": "both",
+            "seasonEpisodeStrategy": "dynamic",
+            "paginate": True,
             "useMultipleInstances": False,
         },
         "category": "Debrid",
@@ -367,10 +365,10 @@ template = [
         "metadata": {
             "id": "evan.aiostreams.setup",
             "name": "Evan's AIOStreams Setup",
-            "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru) + Usenet through the built-in NNTP engine, NZBNest and Hashnab Newznab indexers, Comet/Torrentio/MediaFusion/StremThru Torz scrapers, Zilean on alderaan, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced.",
+            "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru) + Usenet through the built-in NNTP engine, NZBNest Newznab indexer, Comet/Torrentio/MediaFusion/StremThru Torz scrapers, Zilean on alderaan via Torznab, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced.",
             "author": "Evan",
             "source": "custom",
-            "version": "1.0.0",
+            "version": "2.0.0",
             "category": "AIO",
             "serviceRequired": False,
             "services": ["torbox", "torrin", "aiostreams"],
