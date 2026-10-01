@@ -3,10 +3,10 @@
     "metadata": {
       "id": "evan.aiostreams.setup",
       "name": "Evan's AIOStreams Setup",
-      "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru) + Usenet through the built-in NNTP engine, NZBNest Newznab indexer, Comet/Torrentio/MediaFusion/StremThru Torz scrapers, Zilean on alderaan via Torznab, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced.",
+      "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
       "author": "Evan",
       "source": "custom",
-      "version": "2.0.0",
+      "version": "3.0.0",
       "category": "AIO",
       "serviceRequired": false,
       "services": [
@@ -15,92 +15,6 @@
         "aiostreams"
       ],
       "inputs": [
-        {
-          "id": "indexers",
-          "name": "Usenet Indexers",
-          "description": "NZBNest Newznab indexer. Fill in the API key to include it; leave it blank to skip it.",
-          "type": "subsection",
-          "required": false,
-          "subOptions": [
-            {
-              "id": "nzbnest",
-              "name": "NZBNest",
-              "description": "NZBNest Newznab indexer.",
-              "type": "nab-endpoint",
-              "required": false,
-              "nab": {
-                "namespace": "newznab"
-              },
-              "subOptions": [
-                {
-                  "id": "url",
-                  "name": "NZBNest URL",
-                  "description": "Full Newznab API endpoint URL, usually ending in /api.",
-                  "type": "select-with-custom",
-                  "required": false,
-                  "options": [
-                    {
-                      "label": "NzbNest",
-                      "value": "https://nzbnest.com/api",
-                      "apiKeyUrl": "https://nzbnest.com/profile"
-                    }
-                  ],
-                  "default": "https://nzbnest.com/api"
-                },
-                {
-                  "id": "apiKey",
-                  "name": "API Key",
-                  "description": "Your NZBNest API key. Leave blank to skip NZBNest.",
-                  "type": "password",
-                  "required": false
-                }
-              ]
-            }
-          ]
-        },
-        {
-          "id": "indexerNote",
-          "name": "NNTP providers",
-          "description": "Usenet results are fetched through the built-in AIOStreams NNTP engine, so add your NNTP providers under Dashboard -> Usenet -> Providers after applying (providers are instance-level and cannot be part of a template).",
-          "type": "alert",
-          "intent": "info"
-        },
-        {
-          "id": "localAddons",
-          "name": "Local Addons",
-          "description": "Zilean runs on alderaan and exposes a Torznab endpoint. Leave the URL as-is unless it moved.",
-          "type": "subsection",
-          "required": false,
-          "subOptions": [
-            {
-              "id": "zilean",
-              "name": "Zilean",
-              "description": "Zilean Torznab endpoint (torrent indexer for debrid).",
-              "type": "nab-endpoint",
-              "required": false,
-              "nab": {
-                "namespace": "torznab"
-              },
-              "subOptions": [
-                {
-                  "id": "url",
-                  "name": "Zilean Torznab URL",
-                  "description": "Full Torznab API endpoint URL, usually ending in /api.",
-                  "type": "url",
-                  "required": false,
-                  "default": "http://192.168.68.64:8181/torznab"
-                },
-                {
-                  "id": "apiKey",
-                  "name": "API Key",
-                  "description": "API key for Zilean's Torznab endpoint, if yours requires one. Usually blank for LAN instances.",
-                  "type": "password",
-                  "required": false
-                }
-              ]
-            }
-          ]
-        },
         {
           "id": "metaApis",
           "name": "Metadata APIs",
@@ -156,28 +70,8 @@
       },
       "presets": [
         {
-          "__if": "inputs.indexers.nzbnest.apiKey",
-          "type": "newznab",
-          "instanceId": "dc18f718-3177-4d3f-b76f-1b9cf7100468",
-          "enabled": true,
-          "options": {
-            "name": "NZBNest",
-            "api": "{{inputs.indexers.nzbnest}}",
-            "timeout": 15000,
-            "mediaTypes": [],
-            "services": [
-              "aiostreams"
-            ],
-            "searchMode": "both",
-            "seasonEpisodeStrategy": "dynamic",
-            "paginate": true,
-            "useMultipleInstances": false
-          },
-          "category": "Usenet"
-        },
-        {
           "type": "comet",
-          "instanceId": "7377314e-9a74-4279-b29e-87b189d9b953",
+          "instanceId": "433b31e7-0857-44c0-b32a-7a4060bfa593",
           "enabled": true,
           "options": {
             "name": "Comet",
@@ -194,7 +88,7 @@
         },
         {
           "type": "torrentio",
-          "instanceId": "30a70d3c-a33b-4fae-af57-c50e50e41d77",
+          "instanceId": "d0f15283-48dd-4b43-b2a4-923ad229e28c",
           "enabled": true,
           "options": {
             "name": "Torrentio",
@@ -210,7 +104,7 @@
         },
         {
           "type": "mediafusion",
-          "instanceId": "d23472e6-c481-4442-9452-d290c4653342",
+          "instanceId": "9d0b588c-de26-44b9-adaf-f08209c49ba8",
           "enabled": true,
           "options": {
             "name": "MediaFusion",
@@ -232,7 +126,7 @@
         },
         {
           "type": "stremthruTorz",
-          "instanceId": "e3f1be6e-e320-4f5e-b0f6-9dff6c46de59",
+          "instanceId": "7983ac3e-c123-4fc4-9187-fb6b595300cf",
           "enabled": true,
           "options": {
             "name": "StremThru Torz",
@@ -247,24 +141,8 @@
           "category": "Debrid"
         },
         {
-          "type": "torznab",
-          "instanceId": "18caa35d-e41a-4c41-b162-71e2dc7ac669",
-          "enabled": true,
-          "options": {
-            "name": "Zilean",
-            "api": "{{inputs.localAddons.zilean}}",
-            "timeout": 5000,
-            "mediaTypes": [],
-            "searchMode": "both",
-            "seasonEpisodeStrategy": "dynamic",
-            "paginate": true,
-            "useMultipleInstances": false
-          },
-          "category": "Debrid"
-        },
-        {
           "type": "torbox",
-          "instanceId": "8b7f857b-1b57-42c3-a8b1-f54c378d7986",
+          "instanceId": "6bc56120-8dd7-49ec-9693-7895e97dda57",
           "enabled": true,
           "options": {
             "name": "TorBox",
@@ -280,7 +158,7 @@
         },
         {
           "type": "library",
-          "instanceId": "c69abf8c-e0b8-4519-8368-8834b2dc975a",
+          "instanceId": "f65632fa-ac88-4c4e-b92d-177817d5f40d",
           "enabled": true,
           "options": {
             "name": "Library",
@@ -301,7 +179,7 @@
         {
           "__if": "inputs.aiometa.aiometaUrl",
           "type": "custom",
-          "instanceId": "1a163a4d-77d0-450b-98bb-d71bd901ff0d",
+          "instanceId": "fb9b209a-4c81-4e95-80ce-ea4bcd6e36b8",
           "enabled": true,
           "options": {
             "name": "AIOMetadata",
