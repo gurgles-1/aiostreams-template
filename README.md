@@ -1,4 +1,4 @@
-# Evan's AIOStreams Template
+# AIOStreams Template
 
 Versioned, importable [AIOStreams](https://github.com/Viren070/AIOStreams) configuration template.
 
@@ -8,10 +8,10 @@ In AIOStreams: **About → Get Started → Use a Template → Import Template**,
 
 | File | URL |
 |---|---|
-| Latest | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.json` |
-| v3 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v3.json` |
-| v2 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v2.json` |
-| v1 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/evan-aiostreams-template.v1.json` |
+| Latest | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/aiostreams-template.json` |
+| v3 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/aiostreams-template.v3.json` |
+| v2 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/aiostreams-template.v2.json` |
+| v1 (pinned) | `https://raw.githubusercontent.com/gurgles-1/aiostreams-template/main/aiostreams-template.v1.json` |
 
 Importing creates a **new** AIOStreams configuration — it never overwrites your existing one.
 
@@ -28,8 +28,8 @@ v2 had NZBNest (newznab) + Zilean (torznab); v1 also had Hashnab and used the na
 
 ## Versions
 
-- `evan-aiostreams-template.json` — always the latest
-- `evan-aiostreams-template.vX.json` — pinned snapshots; import one of these to freeze a known-good config
+- `aiostreams-template.json` — always the latest
+- `aiostreams-template.vX.json` — pinned snapshots; import one of these to freeze a known-good config
 
 ## Secrets
 
@@ -37,4 +37,4 @@ API keys (TMDB, TVDB) are **template inputs**, not baked into the JSON. You ente
 
 ## Rebuilding
 
-`build_template.py` regenerates `evan-aiostreams-template.json` from the declarative config (edit the script, run it, commit the result).
+`build_template.py` regenerates `aiostreams-template.json` from the declarative config (edit the script, run it, commit the result).
