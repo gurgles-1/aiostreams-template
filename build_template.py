@@ -1,13 +1,13 @@
 #!/usr/bin/env python3
-"""Builds evan-aiostreams-template.json — Evan's AIOStreams config template."""
+"""Builds aiostreams-template.json — a community AIOStreams config template."""
 import json
 import uuid
 
-RSE_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.expressions.json"
-REGEX_URL = "https://raw.githubusercontent.com/redhair777/aio-quality-profiles/main/profiles/2160p-remux.regexes.json"
+RSE_URL = "https://raw.githubusercontent.com/Redhair777/AIO-Quality-Profiles/main/profiles/2160p-remux.expressions.json"
+REGEX_URL = "https://raw.githubusercontent.com/Redhair777/AIO-Quality-Profiles/main/profiles/2160p-remux.regexes.json"
 
 # Version/changelog: AIOStreams matches applied templates to updates by
-# metadata.id, so the id below ("evan.aiostreams.setup") must NEVER change
+# metadata.id, so the id below ("aiostreams.community.template") must NEVER change
 # between versions — only bump TEMPLATE_VERSION.
 TEMPLATE_VERSION = "4.0.0"
 
@@ -198,7 +198,7 @@ config = {
     "syncedRankedStreamExpressionUrls": [RSE_URL],
     "syncedRankedRegexUrls": [REGEX_URL],
     "sortCriteria": {
-        "global": [{"key": "cached", "direction": "desc"}],
+        "global": [{"key": "cached", "direction": "desc"}, {"key": "resolution", "direction": "desc"}, {"key": "quality", "direction": "desc"}, {"key": "streamExpressionScore", "direction": "desc"}],
         "cached": [
             {"key": "library", "direction": "desc"},
             {"key": "service", "direction": "desc"},
@@ -267,10 +267,10 @@ config = {
 template = [
     {
         "metadata": {
-            "id": "evan.aiostreams.setup",
-            "name": "Evan's AIOStreams Setup",
-            "description": "Evan's personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
-            "author": "Evan",
+            "id": "aiostreams.community.template",
+            "name": "AIOStreams Community Template",
+            "description": "Community personal AIOStreams setup: TorBox + Torrin (via StremThru), Comet/Torrentio/MediaFusion/StremThru Torz scrapers, cached-first sorting with the Library pinned high, and the Redhair777 2160p Remux SEL + regex lists synced. Indexers are managed separately (e.g. the Prowlarr marketplace addon).",
+            "author": "Community",
             "source": "custom",
             "version": TEMPLATE_VERSION,
             "category": "AIO",
@@ -283,7 +283,7 @@ template = [
     }
 ]
 
-out = "/home/hatch/workspace/goals/aiostreams-importable-template/files/aiostreams-template/evan-aiostreams-template.json"
+out = "/home/hatch/workspace/goals/aiostreams-importable-template/files/aiostreams-template/aiostreams-template.json"
 with open(out, "w") as f:
     json.dump(template, f, indent=2)
     f.write("\n")
